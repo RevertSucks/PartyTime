@@ -3,6 +3,10 @@ local gameIds = {
 }
 local foundHit
 
+local function import(file)
+    loadstring(game:HttpGetAsync(("https://raw.githubusercontent.com/RevertSucks/PartyTime/main/scripts/%s.lua"):format(file)),file..'.lua')()
+end
+
 local function load()
     for i,v in pairs(gameIds) do
         if game.PlaceId == v then
@@ -12,9 +16,9 @@ local function load()
         end
     end
     if foundHit ~= nil then
-        loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/RevertSucks/PartyTime/main/scripts/"..foundHit..".lua"))()
+        import(foundHit)
     else
-        loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/RevertSucks/PartyTime/main/scripts/Universal.lua"))()
+        import("Universal")
     end
 end
 
