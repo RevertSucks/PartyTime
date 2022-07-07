@@ -14,6 +14,11 @@ local main = library:CreateMain({
 })
  
 local category = main:CreateCategory("Main")
+local info = main:CreateCategory("Info")
+
+local credits = info:CreateSection("Credits")
+local supported = info:CreateSection("Supported Games")
+
 local playerSec = category:CreateSection("Local Player")
 local miscSec = category:CreateSection("Misc")
 
@@ -143,3 +148,11 @@ end,
         animated = true,
     }
 )
+
+credits:Create("Textlabel","Exxen - Scripting")
+credits:Create("Textlabel","Dawid - Discord UI")
+credits:Create("Textlabel","xTheAlex14 - Zypher UI")
+
+for i,v in pairs(game:GetService("HttpService"):JSONDecode(game:HttpGet("https://raw.githubusercontent.com/RevertSucks/PartyTime/main/Supported.lua"))) do
+    supported:Create("Textlabel",i.." | "..v)
+end
