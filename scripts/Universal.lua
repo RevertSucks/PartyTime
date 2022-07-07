@@ -15,11 +15,14 @@ local main = library:CreateMain({
  
 local category = main:CreateCategory("Main")
 local playerSec = category:CreateSection("Local Player")
+local miscSec = category:CreateSection("Misc")
 
 local plr = game:GetService("Players").LocalPlayer
-local char = plr.Character
-local OldWalkspeed = char.Humanoid.WalkSpeed
-local OldJumppower = char.Humanoid.JumpPower
+local function char()
+    return plr.Character
+end
+local OldWalkspeed = char().Humanoid.WalkSpeed
+local OldJumppower = char().Humanoid.JumpPower
 
 --//Variables\\--
 local NewWalkspeed = 0
@@ -41,6 +44,9 @@ end,
 
 playerSec:Create("Toggle","Toggle Walkspeed",function(state)
     WalkspeedToggle = state
+    if state == false then
+        char().Humanoid.WalkSpeed = OldWalkspeed
+    end
 end,
     {
         default = false,
@@ -60,9 +66,36 @@ end,
 
 playerSec:Create("Toggle","Toggle Jumppower",function(state)
     JumppowerToggle = state
+    if state == false then
+        char().Humanoid.JumpPower = OldJumppower
+    end
 end,
     {
         default = false,
+    }
+)
+
+playerSec:Create("Button","Reset",function()
+    char():BreakJoints()
+end,
+    {
+        animated = true,
+    }
+)
+
+miscSec:Create("KeyBind","Hide Menu", function()
+    for i,v in pairs(game:GetService("CoreGui"):GetChildren()) do
+        if v.Name == "PartyTime" then
+            if v.Enabled == true then
+                v.Enabled = false
+            else
+                v.Enabled = true
+            end
+        end
+    end
+end,
+    {
+        default = Enum.KeyCode.N
     }
 )
 
@@ -81,12 +114,32 @@ end)
 setreadonly(gmt, true)
 
 local walkspeed = game:GetService("RunService").RenderStepped:Connect(function()
-    if plr and char:FindFirstChild("Humanoid") and char:FindFirstChild("Humanoid").Health ~= 0 and WalkspeedToggle == true then
-        char.Humanoid.WalkSpeed = NewWalkspeed
+    if plr and char():FindFirstChild("Humanoid") and char():FindFirstChild("Humanoid").Health ~= 0 then
+        if WalkspeedToggle == true then
+            char().Humanoid.WalkSpeed = NewWalkspeed
+        end
     end
 end)
 local jumppower = game:GetService("RunService").RenderStepped:Connect(function()
-    if plr and char:FindFirstChild("Humanoid") and char:FindFirstChild("Humanoid").Health ~= 0 and JumppowerToggle == true then
-        char.Humanoid.JumpPower = NewJumppower
+    if plr and char():FindFirstChild("Humanoid") and char():FindFirstChild("Humanoid").Health ~= 0 then
+        if JumppowerToggle == true then
+            char().Humanoid.JumpPower = NewJumppower
+        end
     end
 end)
+
+miscSec:Create("Button","Close Menu",function()
+    for i,v in pairs(game:GetService("CoreGui"):GetChildren()) do
+        if v.Name == "PartyTime" then
+            v:Destroy()
+            jumppower:Disconnect()
+            walkspeed:Disconnect()
+            char().Humanoid.WalkSpeed = OldWalkspeed
+            char().Humanoid.JumpPower = OldJumppower
+        end
+    end
+end,
+    {
+        animated = true,
+    }
+)
