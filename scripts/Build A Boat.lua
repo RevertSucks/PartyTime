@@ -24,6 +24,10 @@ local function closeUi()
 end
 closeUi()
 
+local function char()
+    return game.Players.LocalPlayer.Character
+end
+
 local DiscordLib = loadstring(game:HttpGet"https://raw.githubusercontent.com/dawid-scripts/UI-Libs/main/discord%20lib.txt")()
 
 local win = DiscordLib:Window("Build A Boat")
@@ -32,6 +36,7 @@ local serv = win:Server("Made By Exxen#0001", "http://www.roblox.com/asset/?id=6
 local autofarmChan = serv:Channel("Autofarm")
 local buyingChan = serv:Channel("Buying")
 local morphChan = serv:Channel("Morphs")
+local playerChan = serv:Channel("Player")
 
 local fireworkType = "FireworkA"
 local fireworkAmount = 1
@@ -122,8 +127,19 @@ morphChan:Button("Chicken", function()
     DiscordLib:Notification("Alert!", "Morped into Chicken!", "Okay!")
 end)
 
-local suc,err = pcall(function()
-    game:GetService('RunService').Heartbeat:connect(function()
+local NewJumppower = 50
+local NewWalkspeed = 16
+
+playerChan:Slider("Walkspeed", 16, 500,16,function(t)
+    NewWalkspeed = t
+end)
+
+playerChan:Slider("Jumppower", 50, 500,50,function(t)
+    NewJumppower = t
+end)
+
+local mainLoop = game:GetService('RunService').Heartbeat:connect(function()
+    local suc,err = pcall(function()
         if autofarmToggle2 == false then
             if autofarmToggle == true and autofarmGoldToggle == true then
                 autofarmToggle2 = true
@@ -173,9 +189,8 @@ local suc,err = pcall(function()
             workspace.ItemBoughtFromShop:InvokeServer(selectedChest, 1)
         end
     end)
+    if not suc then warn(err) end
 end)
-
-if not suc then warn(err) end
 
 local gmt = getrawmetatable(game)
 local OldNamecall = gmt.__namecall
@@ -193,4 +208,50 @@ gmt.__namecall = newcclosure(function(self,...)
     end
 
     return OldNamecall(self,...)
+end)
+
+local gmt = getrawmetatable(game)
+local OldIndex = nil
+setreadonly(gmt, false)
+OldIndex = hookmetamethod(game, "__index",function(Self, Key)
+    if not checkcaller() and Self == "Humanoid" and Key == "WalkSpeed" then
+        return 16
+    end
+    if not checkcaller() and Self == "Humanoid" and Key == "JumpPower" then
+        return 50
+    end
+    return OldIndex(Self, Key)
+end)
+setreadonly(gmt, true)
+
+local walkspeed = game:GetService("RunService").RenderStepped:Connect(function()
+    if game.Players.LocalPlayer and char():FindFirstChild("Humanoid") and char():FindFirstChild("Humanoid").Health ~= 0 then
+        char().Humanoid.WalkSpeed = NewWalkspeed
+    end
+end)
+local jumppower = game:GetService("RunService").RenderStepped:Connect(function()
+    if game.Players.LocalPlayer and char():FindFirstChild("Humanoid") and char():FindFirstChild("Humanoid").Health ~= 0 then
+        char().Humanoid.JumpPower = NewJumppower
+    end
+end)
+
+playerChan:Button("Close UI", function()
+    closeUi()
+    walkspeed:Disconnect()
+    jumppower:Disconnect()
+    mainLoop:Disconnect()
+    char().Humanoid.JumpPower = 50
+    char().Humanoid.WalkSpeed = 16
+end)
+
+playerChan:Bind("Hide UI", Enum.KeyCode.N, function()
+    for i,v in pairs(game.CoreGui:GetChildren()) do
+        if v.Name == "Discord" then
+            if v.Enabled == true then
+                v.Enabled = false
+            else
+                v.Enabled = true
+            end
+        end
+    end
 end)
