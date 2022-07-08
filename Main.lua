@@ -7,9 +7,7 @@ end
 
 for i,v in pairs(gameIds) do
     if game.PlaceId == v then
-        print(i)
         foundHit = string.gsub(i," ","%%20")
-        print(foundHit)
     end
 end
 
