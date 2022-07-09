@@ -1,5 +1,6 @@
 wip  
-archive hydroxide isnt setup properly   
+archive hydroxide isnt setup properly  
+# loadstring:
 ```lua
 loadstring(game:HttpGet("https://raw.githubusercontent.com/RevertSucks/PartyTime/main/Main.lua"))()
 ```
