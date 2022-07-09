@@ -3,6 +3,7 @@ local autofarmToggle2 = false
 local autofarmSpeed = 25
 local autofarmSpeed2 = 1
 local autofarmInstaLoad = false
+local farmType
 
 local winterChest = false
 local winterAmount = 1
@@ -47,6 +48,35 @@ local function teleport(time,cframe)
     local tween =  game:GetService("TweenService"):Create(game.Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(Time), {CFrame = CFrameEnd})
     tween:Play()
     tween.Completed:Wait()
+end
+
+local function breakVol(char)
+    for i,v in pairs(char:GetDescendants()) do
+        if v.IsA(v,"BasePart") then
+            v.Velocity,v.RotVelocity = Vector3.new(0,0,0),Vector3.new(0,0,0)
+        end
+    end
+end
+
+local function goldTeleport(stage)
+    for i,v in pairs(game:GetService("Workspace").BoatStages.NormalStages:GetChildren()) do
+        if v.Name == "CaveStage"..stage then
+            char().HumanoidRootPart.CFrame = CFrame.new(v.DarknessPart.Position.X,v.DarknessPart.Position.Y+25,v.DarknessPart.Position.Z)
+            breakVol(char())
+            wait(.7)
+            breakVol(char())
+            char().HumanoidRootPart.CFrame = CFrame.new(v.DarknessPart.Position.X,v.DarknessPart.Position.Y+25,v.DarknessPart.Position.Z)
+            breakVol(char())
+            wait(.7)
+            breakVol(char())
+            char().HumanoidRootPart.CFrame = CFrame.new(v.DarknessPart.Position.X,v.DarknessPart.Position.Y+25,v.DarknessPart.Position.Z)
+            breakVol(char())
+            wait(.7)
+            breakVol(char())
+            char().HumanoidRootPart.CFrame = CFrame.new(v.DarknessPart.Position.X,v.DarknessPart.Position.Y+25,v.DarknessPart.Position.Z)
+            breakVol(char())
+        end
+    end
 end
 
 buyingChan:Dropdown("Firework Buy", {"A","B","C","D"}, function(t)
@@ -96,9 +126,14 @@ buyingChan:Button("Buy Selected Chest", function()
     selectedChestTog = t
 end)
 
+autofarmChan:Dropdown("Autofarm Method", {"tween gold block","cframe coins"}, function(t)
+    farmType = t
+ end)
+
 autofarmChan:Toggle("Auto-Farm Coins",false, function(t)
     autofarmToggle = t
 end)
+
 autofarmChan:Slider("Speed (lower = faster)", 0, 60,25,function(t)
     autofarmSpeed = t
 end)
@@ -135,18 +170,18 @@ end)
 
 playerChan:Button("No Water Damage", function()
     game.Workspace.Water.CanTouch = false
-    for i,v in pairs(workspace.BoatStages:GetDescendants()) do
-        if v.Name == "Water" then
-            v.CanTouch = false
+    for i,v in pairs(workspace.BoatStages.NormalStages:GetChildren()) do
+        if v:FindFirstChild("Water") then
+            v:FindFirstChild("Water").CanTouch = false
         end   
     end
     waterDamage = true
 end)
 
-workspace.BoatStages.DescendantAdded:Connect(function(obj)
+workspace.BoatStages.NormalStages.ChildAdded:Connect(function(obj)
     if waterDamage == true then
-        if obj.Name == "Water" then
-            obj.CanTouch = false
+        if obj:WaitForChild("Water") then
+            obj:WaitForChild("Water").CanTouch = false
         end
     end
 end)
@@ -154,7 +189,7 @@ end)
 local mainLoop = game:GetService('RunService').Heartbeat:connect(function()
     local suc,err = pcall(function()
         if autofarmToggle2 == false then
-            if autofarmToggle == true then
+            if autofarmToggle == true and farmType == "tween gold block" then
                 autofarmToggle2 = true
                 workspace[tostring(game.Players.LocalPlayer.TeamColor).."Zone"].VoteLaunchRE:FireServer()
                 workspace.ClaimRiverResultsGold:FireServer()
@@ -165,6 +200,23 @@ local mainLoop = game:GetService('RunService').Heartbeat:connect(function()
                 repeat wait() until autofarmInstaLoad == true
                 autofarmInstaLoad = false
                 wait(1)
+                autofarmToggle2 = false
+            elseif autofarmToggle == true and farmType == "cframe coins" then
+                autofarmToggle2 = true
+                workspace[tostring(game.Players.LocalPlayer.TeamColor).."Zone"].VoteLaunchRE:FireServer()
+                goldTeleport(1)
+                goldTeleport(2)
+                goldTeleport(3)
+                goldTeleport(4)
+                goldTeleport(5)
+                goldTeleport(6)
+                goldTeleport(7)
+                goldTeleport(8)
+                goldTeleport(9)
+                goldTeleport(10)
+                char():BreakJoints()
+                workspace.ClaimRiverResultsGold:FireServer()
+                wait(game.Players.RespawnTime+2)
                 autofarmToggle2 = false
             end
         end
@@ -235,5 +287,3 @@ playerChan:Bind("Hide UI", Enum.KeyCode.N, function()
         end
     end
 end)
-
-_G.loader = "3w4g0hdsp"
