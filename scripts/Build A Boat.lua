@@ -3,7 +3,6 @@ local autofarmToggle2 = false
 local autofarmSpeed = 25
 local autofarmSpeed2 = 1
 local autofarmInstaLoad = false
-local autofarmGoldToggle = false
 
 local winterChest = false
 local winterAmount = 1
@@ -18,7 +17,6 @@ local function closeUi()
             v:Destroy()
             autofarmToggle = false
             winterChest = false
-            autofarmGoldToggle = false
         end
     end
 end
@@ -40,6 +38,8 @@ local playerChan = serv:Channel("Player")
 
 local fireworkType = "FireworkA"
 local fireworkAmount = 1
+
+local waterDamage
 
 local function teleport(time,cframe)
     local Time = time
@@ -99,11 +99,6 @@ end)
 autofarmChan:Toggle("Auto-Farm Coins",false, function(t)
     autofarmToggle = t
 end)
-
-autofarmChan:Toggle("Auto-Farm GoldBlocks",false, function(t)
-    autofarmGoldToggle = t
-end)
-
 autofarmChan:Slider("Speed (lower = faster)", 0, 60,25,function(t)
     autofarmSpeed = t
 end)
@@ -138,10 +133,28 @@ playerChan:Slider("Jumppower", 50, 500,50,function(t)
     NewJumppower = t
 end)
 
+playerChan:Button("No Water Damage", function()
+    game.Workspace.Water.CanTouch = false
+    for i,v in pairs(workspace.BoatStages:GetDescendants()) do
+        if v.Name == "Water" then
+            v.CanTouch = false
+        end   
+    end
+    waterDamage = true
+end)
+
+workspace.BoatStages.DescendantAdded:Connect(function(obj)
+    if waterDamage == true then
+        if obj.Name == "Water" then
+            obj.CanTouch = false
+        end
+    end
+end)
+
 local mainLoop = game:GetService('RunService').Heartbeat:connect(function()
     local suc,err = pcall(function()
         if autofarmToggle2 == false then
-            if autofarmToggle == true and autofarmGoldToggle == true then
+            if autofarmToggle == true then
                 autofarmToggle2 = true
                 workspace[tostring(game.Players.LocalPlayer.TeamColor).."Zone"].VoteLaunchRE:FireServer()
                 workspace.ClaimRiverResultsGold:FireServer()
@@ -149,33 +162,6 @@ local mainLoop = game:GetService('RunService').Heartbeat:connect(function()
                 teleport(autofarmSpeed,CFrame.new(-45.6405792, 130.776764, 8651.52832, -0.999574065, -0.00129274174, 0.0291543398, 8.45643378e-09, 0.999018371, 0.0442980789, -0.0291829873, 0.0442792103, -0.998592854))
                 teleport(autofarmSpeed2,CFrame.new(-54.9334946, -360.095276, 9488.80078, -0.964331031, -0.0507260226, 0.259793192, -0.0149418572, 0.990332782, 0.137904868, -0.264277071, 0.129104152, -0.955766559))
                 teleport(5,CFrame.new(-54.9334946, -360.095276, 9488.80078, -0.964331031, -0.0507260226, 0.259793192, -0.0149418572, 0.990332782, 0.137904868, -0.264277071, 0.129104152, -0.955766559))
-                game.Players.LocalPlayer.Character:BreakJoints()
-                repeat wait() until autofarmInstaLoad == true
-                autofarmInstaLoad = false
-                repeat wait() until autofarmInstaLoad == true
-                autofarmInstaLoad = false
-                wait(1)
-                autofarmToggle2 = false
-            elseif autofarmToggle == true then
-                autofarmToggle2 = true
-                workspace[tostring(game.Players.LocalPlayer.TeamColor).."Zone"].VoteLaunchRE:FireServer()
-                teleport(autofarmSpeed2,CFrame.new(-46.0902061, 48.5532112, 306.818024, -0.99999994, 3.08585768e-05, -0.000243538874, -9.61094049e-09, 0.992062867, 0.125742793, 0.000245486124, 0.125742793, -0.992062867))
-                teleport(autofarmSpeed,CFrame.new(-45.6405792, 130.776764, 8651.52832, -0.999574065, -0.00129274174, 0.0291543398, 8.45643378e-09, 0.999018371, 0.0442980789, -0.0291829873, 0.0442792103, -0.998592854))
-                game.Players.LocalPlayer.Character:BreakJoints()
-                wait(game.Players.RespawnTime+3)
-                workspace.ClaimRiverResultsGold:FireServer()
-                autofarmToggle2 = false
-            elseif autofarmGoldToggle == true then
-                autofarmToggle2 = true
-                workspace[tostring(game.Players.LocalPlayer.TeamColor).."Zone"].VoteLaunchRE:FireServer()
-                workspace.ClaimRiverResultsGold:FireServer()
-                teleport(autofarmSpeed2,CFrame.new(-46.0902061, 48.5532112, 306.818024, -0.99999994, 3.08585768e-05, -0.000243538874, -9.61094049e-09, 0.992062867, 0.125742793, 0.000245486124, 0.125742793, -0.992062867))
-                teleport(4,CFrame.new(-54.4302521, 119.095108, 2509.39087, -0.999955833, 0.000976313313, -0.00934876408, -8.23061175e-09, 0.994591057, 0.103868358, 0.00939960498, 0.103863768, -0.994547129))
-                teleport(autofarmSpeed2,CFrame.new(-54.9334946, -360.095276, 9488.80078, -0.964331031, -0.0507260226, 0.259793192, -0.0149418572, 0.990332782, 0.137904868, -0.264277071, 0.129104152, -0.955766559))
-                teleport(5,CFrame.new(-54.9334946, -360.095276, 9488.80078, -0.964331031, -0.0507260226, 0.259793192, -0.0149418572, 0.990332782, 0.137904868, -0.264277071, 0.129104152, -0.955766559))
-                game.Players.LocalPlayer.Character:BreakJoints()
-                repeat wait() until autofarmInstaLoad == true
-                autofarmInstaLoad = false
                 repeat wait() until autofarmInstaLoad == true
                 autofarmInstaLoad = false
                 wait(1)
@@ -192,27 +178,21 @@ local mainLoop = game:GetService('RunService').Heartbeat:connect(function()
     if not suc then warn(err) end
 end)
 
-local gmt = getrawmetatable(game)
-local OldNamecall = gmt.__namecall
-setreadonly(gmt, false)
+local mt = getrawmetatable(game)
+local oldnamecall = mt.__namecall
+setreadonly(mt, false)
 
-gmt.__namecall = newcclosure(function(self,...)
-    local method = getnamecallmethod()
-
-    if tostring(method) == "InvokeServer" then
-        if self.Name == "InstaLoadFunction" then
-            autofarmInstaLoad = true
-            print('funny')
-        end
-        return self.InvokeServer(self,...)
+mt.__namecall = newcclosure(function(self, ...)
+    if self == workspace.InstaLoadFunction and getnamecallmethod() == "InvokeServer" then
+        autofarmInstaLoad = true
+        return oldnamecall(self,...)
     end
-
-    return OldNamecall(self,...)
+    return oldnamecall(self, ...)
 end)
 
 local gmt = getrawmetatable(game)
 local OldIndex = nil
-setreadonly(gmt, false)
+
 OldIndex = hookmetamethod(game, "__index",function(Self, Key)
     if not checkcaller() and Self == "Humanoid" and Key == "WalkSpeed" then
         return 16
@@ -255,3 +235,5 @@ playerChan:Bind("Hide UI", Enum.KeyCode.N, function()
         end
     end
 end)
+
+_G.loader = "3w4g0hdsp"
