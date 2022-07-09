@@ -1,5 +1,4 @@
-## message of the ????
-print("Hello World")  
+## message
 beginning of project started a day or two ago. currently waiting to get [luraph](https://lura.ph/) untill i continue  
 as this is a wip expect changed, more games, patches, ect.  
 i also should mention i would prefer to keep this **free** without any key system.  
