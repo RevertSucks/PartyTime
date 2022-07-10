@@ -7,9 +7,6 @@ Discord: Exxen#0001
 Email: exxen@cock.li  
 
 ## message
-beginning of project started a day or two ago. currently waiting to get [luraph](https://lura.ph/) untill i continue  
-as this is a wip expect changes, more games, patches, ect.  
-i also should mention i would prefer to keep this **free** without any key system.  
-the "offical" release will be on my [scriptblox](https://scriptblox.com/u/Exxen)  
-and since im not leaving project code open souce (well build a boat is rn so is universal) i would like 2 request no attempts at revealing how these scripts work.  
-i also dont log any information nor do i plan to. adding this (for me since idk how to code a secure webhook) would leave an exposed webhook and if this blows up tons of messages i dont want to deal with!
+barb blox offically released!!!  
+build a boat has a little glitch in the tween autofarm i recommend not using that method until i fix it (not bc its detected but bc its ineffectient)  
+will start working on new games right now😏
