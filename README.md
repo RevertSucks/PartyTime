@@ -7,6 +7,5 @@ Discord: Exxen#0001
 Email: exxen@cock.li  
 
 ## message
-barb blox offically released!!!  
 build a boat has a little glitch in the tween autofarm i recommend not using that method until i fix it (not bc its detected but bc its ineffectient)  
 offical [trello](https://trello.com/b/M5mDKzRQ/partytime)!!!!
