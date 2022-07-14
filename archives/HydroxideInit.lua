@@ -1,3 +1,13 @@
+--[[
+local owner = "ReverTSucks"
+local branch = "archives"
+local function webImport(file)
+    return loadstring(game:HttpGetAsync(("https://raw.githubusercontent.com/%s/PartyTime/main/%s/%s.lua"):format(owner, branch, file)), file .. '.lua')()
+end
+webImport("HydroxideInit")
+webImport("Hydroxide")
+]]--
+
 local environment = assert(getgenv, "<OH> ~ Your exploit is not supported")()
 
 if oh then
