@@ -6,7 +6,7 @@ end
 
 local web = true
 local user = "ReverTSucks" -- change if you're using a fork
-local branch = "main/archives"
+local branch = "archives"
 local importCache = {}
 
 local function hasMethods(methods)
