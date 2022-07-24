@@ -10,6 +10,7 @@ Email: exxen@cock.li
 ## new games:
   scp 3008  
   work at a pizza place (open source)  
+  emergency response: liberty county (partially finished ;))
 ## features:
   speed type to global (this type is undetected by erlc and many other games)
 
