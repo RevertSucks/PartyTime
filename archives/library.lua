@@ -1,5 +1,5 @@
 local script = game:GetService("Players").LocalPlayer.PlayerGui.GameMenus.MenuFunctions2
-local functions
+local functions = {}
 functions.__index = functions
 
 function functions:notification(p16,p17,p18)
