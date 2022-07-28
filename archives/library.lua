@@ -176,7 +176,3 @@ function functions:onScreen(frame)
         return false
     end
 end
-
-
-
-notification("Made By Exxen","nigger",Color3.new(255,0,255))
