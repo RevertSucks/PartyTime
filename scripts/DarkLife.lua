@@ -1,4 +1,4 @@
---server WIP, currently only picks up printer money you own and are inside the house of
+--severe WIP, currently only picks up printer money you own and are inside the house of
 if (rconsoleprint) then
   local hasFound
   local function FireRay(character)
