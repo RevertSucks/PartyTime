@@ -1,11 +1,11 @@
-if game:GetService("Workspace").Lobby:FindFirstChild("brazil") then
-    game:GetService("Workspace").Lobby:FindFirstChild("brazil"):Destroy()
+if game:GetService("Workspace").Lobby:FindFirstChild("brazil"):FindFirstChild("portal"):FindFirstChild("TouchInterest") then
+    game:GetService("Workspace").Lobby:FindFirstChild("brazil").portal.TouchInterest:Destroy()
 end
-if game:GetService("Workspace").Lobby:FindFirstChild("Teleport3") then
-    game:GetService("Workspace").Lobby:FindFirstChild("Teleport3"):Destroy()
+if game:GetService("Workspace").Lobby:FindFirstChild("Teleport3") and  game:GetService("Workspace").Lobby:FindFirstChild("Teleport3"):FindFirstChild("TouchInterest") then
+    game:GetService("Workspace").Lobby:FindFirstChild("Teleport3").TouchInterest:Destroy()
 end
-if game:GetService("Workspace").Lobby:FindFirstChild("Teleport4") then
-    game:GetService("Workspace").Lobby:FindFirstChild("Teleport4"):Destroy()
+if game:GetService("Workspace").Lobby:FindFirstChild("Teleport4") and  game:GetService("Workspace").Lobby:FindFirstChild("Teleport4"):FindFirstChild("TouchInterest") then
+    game:GetService("Workspace").Lobby:FindFirstChild("Teleport4").TouchInterest:Destroy()
 end
 
 local Mercury = loadstring(game:HttpGet("https://raw.githubusercontent.com/deeeity/mercury-lib/master/src.lua"))()
@@ -79,11 +79,11 @@ if (plr and plr.Character) and (lplr and lplr.Character) then
         task.wait()
         n = n+1
         if method == "Kick" then
-            lplr.Character.HumanoidRootPart.CFrame = CFrame.new(-282.155212, 305.095917, -1.95643675, 0, -1, 0, 0, 0, 1, -1, 0, 0)+Vector3.new(0,math.random(0,2),0)
+            lplr.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Lobby.brazil.portal.CFrame
         elseif method == "Serverhop" then
-            lplr.Character.HumanoidRootPart.CFrame = CFrame.new(-361.273865, 327.288757, -21.3077393, 0, 0, 1, 0, -1, 0, 1, 0, -0)+Vector3.new(0,math.random(0,2),0)
+            lplr.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Lobby.Teleport3.CFrame+Vector3.new(0,math.random(0,2),0)
         elseif method == "Slap Royale" then
-            lplr.Character.HumanoidRootPart.CFrame = CFrame.new(-361.053223, 327.288757, 17.0403557, 0, 0, -1, 0, -1, -0, -1, 0, -0)+Vector3.new(0,math.random(0,2),0)
+            lplr.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Lobby.Teleport4.CFrame+Vector3.new(0,math.random(0,2),0)
         end
     until not plr or n > 1000
 end
@@ -103,6 +103,7 @@ local stopOrbit = false
 local autoSlapples = false
 local selected
 local viewing = false
+local hideName = false
 local playerlist = {}
 local anims = {}
 local selectedanim
@@ -177,6 +178,9 @@ plrtab:Toggle{Name = "Anti-Reaper Glove", StartingState = false,Description = "T
         game:GetService("Lighting"):FindFirstChild("DeathMarkColorCorrection"):Destroy()
         game:GetService("Workspace"):FindFirstChild("reaperambiance"):Destroy()
     end
+end}
+plrtab:Toggle{Name = "Hide Name", StartingState = false,Description = "FE, no reporting ! !",Callback = function(state)
+    hideName = state
 end}
 
 plrtab:Toggle{Name = "Auto Grab Slapples", StartingState = false,Description = "ez autofarm method loool",Callback = function(state)
@@ -260,6 +264,11 @@ game:GetService("RunService").Heartbeat:Connect(function()
     else
         game.Workspace.CurrentCamera.CameraSubject = char().Humanoid    
     end
+    if hideName then
+        if (char() and char():FindFirstChild("Humanoid").Health and char():FindFirstChild("Humanoid").Health > 0) and (char():FindFirstChild("Head") and char().Head:FindFirstChild("Nametag")) then
+            char().Head:FindFirstChild("Nametag"):Destroy()
+        end
+    end
 end)
 --loops end
 --orbit glove start
@@ -295,3 +304,16 @@ game.Players.LocalPlayer.CharacterAdded:Connect(function()
     end)
 end)
 --orbit glove end
+
+--[[
+    spawn(function()
+    while task.wait() do
+    for i,v in pairs(game.Workspace:GetChildren()) do
+        if string.find(v.Name,"Tycoon") and v:FindFirstChild("Destruct") and v.Destruct:FindFirstChild("ClickDetector") then
+            fireclickdetector(v.Destruct.ClickDetector)
+        end
+    end
+    end
+end)
+--auto tycoon destroyer
+]]
