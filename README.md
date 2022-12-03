@@ -1,5 +1,5 @@
 # loadstring:
-```lua
+```
 https://scriptblox.com/script/Dark-Life-Beta-Overpowered-Script-7249
 ```
 
