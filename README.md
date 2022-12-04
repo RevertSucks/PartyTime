@@ -1,11 +1,13 @@
 # loadstring:
+```lua
+loadstring(game:HttpGet("https://raw.githubusercontent.com/RevertSucks/PartyTime/main/Main.lua"))()
 ```
-https://scriptblox.com/script/Dark-Life-Beta-Overpowered-Script-7249
-```
+# contact:
+Discord: Exxen#0001  
 
-# update log (dark life)  
-v1.1  
-heavy improvements on quick printer (example: https://cdn.discordapp.com/attachments/1001022497283641354/1048581562066800730/optimization.mp4) (note: i know this doesnt look crazy, but my pc is higher end and usually never struggles with fps while scripting)
+# plans:
+no plans, development is haulted!
 
-v1  
-release
+
+# message
+build a boat has a little glitch in the tween autofarm i recommend not using that method until i fix it (not bc its detected but bc its ineffectient)  
