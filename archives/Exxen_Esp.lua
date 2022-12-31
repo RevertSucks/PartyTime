@@ -11,14 +11,14 @@ for i,v in pairs(game.Players:GetPlayers()) do
     local newHighlight = Instance.new("Highlight")
     
     newHighlight.Name = "HumanoidRootPart"
-    newHighlight.Parent = character
+    newHighlight.Parent = v.Character
     
     local function updateOutline()
         game:GetService("RunService").RenderStepped:Connect(function()
             newHighlight.Enabled = ESP.Enabled
             newHighlight.FillColor = ESP.FillColor
             newHighlight.FillTransparency = ESP.FillTransparency
-            newHighlight.outlinecolor = ESP.OutlineColor
+            newHighlight.OutlineColor = ESP.OutlineColor
             newHighlight.OutlineTransparency = ESP.OutlineTransparency
         end)
     end
@@ -48,14 +48,14 @@ game.Players.PlayerAdded:Connect(function(v)
     local newHighlight = Instance.new("Highlight")
     
     newHighlight.Name = "HumanoidRootPart"
-    newHighlight.Parent = character
+    newHighlight.Parent = v.Character
     
     local function updateOutline()
         game:GetService("RunService").RenderStepped:Connect(function()
             newHighlight.Enabled = ESP.Enabled
             newHighlight.FillColor = ESP.FillColor
             newHighlight.FillTransparency = ESP.FillTransparency
-            newHighlight.outlinecolor = ESP.OutlineColor
+            newHighlight.OutlineColor = ESP.OutlineColor
             newHighlight.OutlineTransparency = ESP.OutlineTransparency
         end)
     end
