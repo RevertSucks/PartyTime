@@ -11,7 +11,7 @@ for i,v in pairs(game.Players:GetPlayers()) do
     local newHighlight = Instance.new("Highlight")
     
     newHighlight.Name = "HumanoidRootPart"
-    newHighlight.Parent = character
+    newHighlight.Parent = v.Character
     
     local function updateOutline()
         game:GetService("RunService").RenderStepped:Connect(function()
@@ -48,7 +48,7 @@ game.Players.PlayerAdded:Connect(function(v)
     local newHighlight = Instance.new("Highlight")
     
     newHighlight.Name = "HumanoidRootPart"
-    newHighlight.Parent = character
+    newHighlight.Parent = v.Character
     
     local function updateOutline()
         game:GetService("RunService").RenderStepped:Connect(function()
