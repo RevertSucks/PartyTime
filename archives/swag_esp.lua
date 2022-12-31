@@ -34,11 +34,6 @@ for i,v in pairs(game.Players:GetPlayers()) do
     v.CharacterAdded:Connect(function(char)
         newHighlight.Parent = char
         
-        char.ChildAdded:Connect(function(item)
-            if item == "Highlight" and ESP.Enabled == true then
-                item:Destroy()
-            end
-        end)
     end)
     end
 end
@@ -70,12 +65,6 @@ game.Players.PlayerAdded:Connect(function(v)
     
     v.CharacterAdded:Connect(function(char)
         newHighlight.Parent = char
-        
-        char.ChildAdded:Connect(function(item)
-            if item == "Highlight" and ESP.Enabled == true then
-                item:Destroy()
-            end
-        end)
     end)
     end
 end)
