@@ -18,7 +18,7 @@ for i,v in pairs(game.Players:GetPlayers()) do
             newHighlight.Enabled = ESP.Enabled
             newHighlight.FillColor = ESP.FillColor
             newHighlight.FillTransparency = ESP.FillTransparency
-            newHighlight.outlinecolor = ESP.OutlineColor
+            newHighlight.OutlineColor = ESP.OutlineColor
             newHighlight.OutlineTransparency = ESP.OutlineTransparency
         end)
     end
@@ -55,7 +55,7 @@ game.Players.PlayerAdded:Connect(function(v)
             newHighlight.Enabled = ESP.Enabled
             newHighlight.FillColor = ESP.FillColor
             newHighlight.FillTransparency = ESP.FillTransparency
-            newHighlight.outlinecolor = ESP.OutlineColor
+            newHighlight.OutlineColor = ESP.OutlineColor
             newHighlight.OutlineTransparency = ESP.OutlineTransparency
         end)
     end
