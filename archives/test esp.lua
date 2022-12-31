@@ -18,20 +18,33 @@ for i,v in pairs(game.Players:GetPlayers()) do
             newHighlight.Enabled = ESP.Enabled
             newHighlight.FillColor = ESP.FillColor
             newHighlight.FillTransparency = ESP.FillTransparency
-            newHighlight.OutlineColor = ESP.OutlineColor
+            newHighlight.outlinecolor = ESP.OutlineColor
             newHighlight.OutlineTransparency = ESP.OutlineTransparency
         end)
     end
     
     coroutine.wrap(updateOutline)()
     
+    v.Character.ChildAdded:Connect(function(item)
+        if item == "Highlight" and ESP.Enabled == true then
+            item:Destroy()
+        end
+    end)
+    
     v.CharacterAdded:Connect(function(char)
         newHighlight.Parent = char
+        
+        char.ChildAdded:Connect(function(item)
+            if item == "Highlight" and ESP.Enabled == true then
+                item:Destroy()
+            end
+        end)
     end)
     end
 end
 
 game.Players.PlayerAdded:Connect(function(v)
+    if v ~= game.Players.LocalPlayer then
     local newHighlight = Instance.new("Highlight")
     
     newHighlight.Name = "HumanoidRootPart"
@@ -42,16 +55,29 @@ game.Players.PlayerAdded:Connect(function(v)
             newHighlight.Enabled = ESP.Enabled
             newHighlight.FillColor = ESP.FillColor
             newHighlight.FillTransparency = ESP.FillTransparency
-            newHighlight.OutlineColor = ESP.OutlineColor
+            newHighlight.outlinecolor = ESP.OutlineColor
             newHighlight.OutlineTransparency = ESP.OutlineTransparency
         end)
     end
     
     coroutine.wrap(updateOutline)()
     
+    v.Character.ChildAdded:Connect(function(item)
+        if item == "Highlight" and ESP.Enabled == true then
+            item:Destroy()
+        end
+    end)
+    
     v.CharacterAdded:Connect(function(char)
         newHighlight.Parent = char
+        
+        char.ChildAdded:Connect(function(item)
+            if item == "Highlight" and ESP.Enabled == true then
+                item:Destroy()
+            end
+        end)
     end)
+    end
 end)
 
 return ESP
