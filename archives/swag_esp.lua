@@ -54,7 +54,7 @@ for i,v in pairs(game.Players:GetPlayers()) do
 
                 local dist = (camera.CFrame.Position - rootPart.Position).Magnitude
                 if onScreen then
-                    newUsername.Position = Vector2.new(headPos.X, headPos.Y+ESP.HeightOffset.Y)
+                    newUsername.Position = Vector2.new(headPos.X, headPos.Y-ESP.HeightOffset.Y)
                     newUsername.Visible = true 
                 else
                     newUsername.Visible = false
@@ -109,7 +109,7 @@ game.Players.PlayerAdded:Connect(function(v)
     
                     local dist = (camera.CFrame.Position - rootPart.Position).Magnitude
                     if onScreen then
-                        newUsername.Position = Vector2.new(headPos.X, headPos.Y+ESP.HeightOffset.Y)
+                        newUsername.Position = Vector2.new(headPos.X, headPos.Y-ESP.HeightOffset.Y)
                         newUsername.Visible = true 
                     else
                         newUsername.Visible = false
